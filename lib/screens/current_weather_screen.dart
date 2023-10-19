@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherbran/models/datum.dart';
 
 enum WeatherCondition {
   clear,
@@ -8,7 +9,32 @@ enum WeatherCondition {
   windy,
 }
 
-class CurrentWeatherScreen extends StatefulWidget {
+// @override
+// Widget build(BuildContext context) {
+//   //Recibir argumentos de otra pantalla
+//   final Datum datum =
+//       //d
+//       ModalRoute.of(context)?.settings.arguments as Datum;
+//   return Scaffold(
+//     body: CustomScrollView(
+//       //Widget con comportamientos predefinidos al scroll
+//       slivers: [
+//         SliverList(
+//           delegate: SliverChildListDelegate.fixed(
+//             [
+//               _PosterAndTitle(movie: movie),
+//               _Overview(),
+//             ],
+//           ),
+//         )
+//       ],
+//     ),
+//   );
+// }
+
+class CurrentWeatherScreen extends StatelessWidget {
+  // final Datum datum;
+//  CurrentWeatherScreen({super.key, required this.datum});
   final String city;
   final double temperature;
   final double feelsLike;
@@ -19,8 +45,9 @@ class CurrentWeatherScreen extends StatefulWidget {
   final int clouds;
   final DateTime dateTime;
   final int aqi;
+  final WeatherCondition weatherCondition;
 
-  const CurrentWeatherScreen({
+  CurrentWeatherScreen({
     required this.city,
     required this.temperature,
     required this.feelsLike,
@@ -29,27 +56,16 @@ class CurrentWeatherScreen extends StatefulWidget {
     required this.windSpeed,
     required this.windDirection,
     required this.clouds,
-    required this.aqi, 
+    required this.aqi,
+    required this.weatherCondition,
     required this.dateTime,
   });
-
-  @override
-  _CurrentWeatherScreenState createState() => _CurrentWeatherScreenState();
-}
-
-class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> {
-  WeatherCondition _weatherCondition = WeatherCondition.clear;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.city),
+        title: Text(city),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -61,15 +77,16 @@ class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Image.asset(
-                      getWeatherIcon(_weatherCondition) ?? 'assets/weather_unknown.png',
+                      getWeatherIcon(weatherCondition) ??
+                          'assets/weather_unknown.png',
                       width: 200,
                     ),
                     Text(
-                      "${widget.temperature.toStringAsFixed(1)}°C",
+                      "${temperature.toStringAsFixed(1)}°C",
                       style: TextStyle(fontSize: 24),
                     ),
                     Text(
-                      "${widget.feelsLike.toStringAsFixed(1)}°C (sensación térmica)",
+                      "${feelsLike.toStringAsFixed(1)}°C (sensación térmica)",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -80,15 +97,15 @@ class _CurrentWeatherScreenState extends State<CurrentWeatherScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Cantidad de nubes: ${widget.clouds}',
+                      'Cantidad de nubes: ${clouds}',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'Fecha y hora: ${widget.dateTime.toIso8601String()}',
+                      'Fecha y hora: ${dateTime.toIso8601String()}',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'AQI: ${widget.aqi}',
+                      'AQI: ${aqi}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ],

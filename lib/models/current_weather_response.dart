@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'package:weatherbran/models/datum.dart';
-
-class CurrentWeatherResponse {
+class NowCurrentWeatherResponse {
     int count;
     List<Datum> data;
 
-    CurrentWeatherResponse({
+    NowCurrentWeatherResponse({
         required this.count,
         required this.data,
     });
 
-    factory CurrentWeatherResponse.fromRawJson(String str) => CurrentWeatherResponse.fromJson(json.decode(str));
+    factory NowCurrentWeatherResponse.fromRawJson(String str) => NowCurrentWeatherResponse.fromJson(json.decode(str));
 
     // String toRawJson() => json.encode(toJson());
 
-    factory CurrentWeatherResponse.fromJson(Map<String, dynamic> json) => CurrentWeatherResponse(
+    factory NowCurrentWeatherResponse.fromJson(Map<String, dynamic> json) => NowCurrentWeatherResponse(
         count: json["count"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
     );
