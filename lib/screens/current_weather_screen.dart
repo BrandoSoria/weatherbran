@@ -9,64 +9,38 @@ enum WeatherCondition {
   windy,
 }
 
-// @override
-// Widget build(BuildContext context) {
-//   //Recibir argumentos de otra pantalla
-//   final Datum datum =
-//       //d
-//       ModalRoute.of(context)?.settings.arguments as Datum;
-//   return Scaffold(
-//     body: CustomScrollView(
-//       //Widget con comportamientos predefinidos al scroll
-//       slivers: [
-//         SliverList(
-//           delegate: SliverChildListDelegate.fixed(
-//             [
-//               _PosterAndTitle(movie: movie),
-//               _Overview(),
-//             ],
-//           ),
-//         )
-//       ],
-//     ),
-//   );
-// }
+@override
+Widget build(BuildContext context) {
+
+  //Recibir argumentos de otra pantalla
+  final Datum datum =
+      //d
+      ModalRoute.of(context)?.settings.arguments as Datum;
+  return Scaffold(
+    body: CustomScrollView(
+      //Widget con comportamientos predefinidos al scroll
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate.fixed(
+            [
+              CurrentWeatherScreen(datum: datum),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
 
 class CurrentWeatherScreen extends StatelessWidget {
-  // final Datum datum;
-//  CurrentWeatherScreen({super.key, required this.datum});
-  final String city;
-  final double temperature;
-  final double feelsLike;
-  final double humidity;
-  final double rainProbability;
-  final double windSpeed;
-  final double windDirection;
-  final int clouds;
-  final DateTime dateTime;
-  final int aqi;
-  final WeatherCondition weatherCondition;
+  final Datum? datum;
 
-  CurrentWeatherScreen({
-    required this.city,
-    required this.temperature,
-    required this.feelsLike,
-    required this.humidity,
-    required this.rainProbability,
-    required this.windSpeed,
-    required this.windDirection,
-    required this.clouds,
-    required this.aqi,
-    required this.weatherCondition,
-    required this.dateTime,
-  });
+  CurrentWeatherScreen({super.key, required this.datum});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(city),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Center(
           child: Row(
@@ -76,17 +50,13 @@ class CurrentWeatherScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.asset(
-                      getWeatherIcon(weatherCondition) ??
-                          'assets/weather_unknown.png',
-                      width: 200,
-                    ),
                     Text(
-                      "${temperature.toStringAsFixed(1)}°C",
+                      //temperatura cambio new
+                      this.datum?.weather.description ?? 'No hay datos',
                       style: TextStyle(fontSize: 24),
                     ),
                     Text(
-                      "${feelsLike.toStringAsFixed(1)}°C (sensación térmica)",
+                      "°C (sensación térmica)",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -97,15 +67,15 @@ class CurrentWeatherScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Cantidad de nubes: ${clouds}',
+                      'Cantidad de nubes: ${datum?.clouds}',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'Fecha y hora: ${dateTime.toIso8601String()}',
+                      'Fecha y hora:',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'AQI: ${aqi}',
+                      'AQI: ${datum?.aqi}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ],

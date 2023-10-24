@@ -6,8 +6,8 @@ import 'package:weatherbran/models/models.dart';
 
 // import 'package:weatherbran/models/models.dart';
 // import 'package:weatherbran/models/current_weather_response.dart';
-class WeatherProvider extends ChangeNotifier {
-  String _baseUrl = 'api.weatherbit.io';
+class WeatherProvider with ChangeNotifier {
+  String _baseUrl = 'api.weatherbit.io/v2.0/';
   String _apiKey = '51eef3e352ac456587064cbc94a83c1b';
 
   List<Datum> onDisplayCurrentWeather = [];
@@ -17,13 +17,14 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   getOnDisplayCurrentWeather() async {
-    var url = Uri.https(_baseUrl, 'v2.0/current', {
+    var url = Uri.https(_baseUrl, '/v2.0/current?lat=35.7796&lon=-78.6382', {
       'api_key': _apiKey,
     });
 
     final response = await http.get(url);
     final Map<String, dynamic> decodeData = json.decode(response.body);
-    final currentWeatherResponse = NowCurrentWeatherResponse.fromRawJson(response.body);
+    final currentWeatherResponse =
+        NowCurrentWeatherResponse.fromRawJson(response.body);
     //
     onDisplayCurrentWeather = currentWeatherResponse.data;
     notifyListeners();
