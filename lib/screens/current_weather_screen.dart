@@ -52,7 +52,7 @@ class CurrentWeatherScreen extends StatelessWidget {
                   children: [
                     Text(
                       //temperatura cambio new
-                      this.datum?.weather.description ?? 'No hay datos',
+                      datum?.weather.description ?? 'No hay datos',
                       style: TextStyle(fontSize: 24),
                     ),
                     Text(
