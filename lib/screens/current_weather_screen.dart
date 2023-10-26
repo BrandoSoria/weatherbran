@@ -52,7 +52,7 @@ class CurrentWeatherScreen extends StatelessWidget {
                   children: [
                     Text(
                       //temperatura cambio new
-                      datum?.weather.description ?? 'No hay datos',
+                      'Temperatura: ${datum?.appTemp}',
                       style: TextStyle(fontSize: 24),
                     ),
                     Text(
@@ -71,7 +71,7 @@ class CurrentWeatherScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'Fecha y hora:',
+                      'Fecha y hora: ${datum?.datetime}',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(

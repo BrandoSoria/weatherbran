@@ -13,11 +13,12 @@ class NowCurrentWeatherResponse {
 
     // String toRawJson() => json.encode(toJson());
 
-    factory NowCurrentWeatherResponse.fromJson(Map<String, dynamic> json) => NowCurrentWeatherResponse(
-        count: json["count"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    );
-
+  factory NowCurrentWeatherResponse.fromJson(Map<String, dynamic> json) => NowCurrentWeatherResponse(
+  count: json["count"] ?? 0, // Usar 0 (u otro valor predeterminado) si "count" es nulo
+  data: (json["data"] as List<dynamic>?)
+      ?.map((x) => Datum.fromJson(x))
+      .toList() ?? [], // Usar una lista vacía si "data" es nulo
+);
     Map<String, dynamic> toJson() => {
         "count": count,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),

@@ -17,9 +17,8 @@ class WeatherProvider with ChangeNotifier {
   }
 
   getOnDisplayCurrentWeather() async {
-    var url = Uri.https(_baseUrl, '/now', {
-      'lat': 35.7796,
-      'lon': -78.6382,
+    var url = Uri.https(_baseUrl, '/v2.0/current', {
+     
       'key': _apiKey,
     });
 
